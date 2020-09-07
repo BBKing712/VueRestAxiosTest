@@ -4,7 +4,7 @@
     <input type="text" v-model="todoName" @keyup.enter="addTodo">
     <ul>
       <li v-for="todo of todos" :key="todo.id">
-        {{todo.name}}
+        {{todo.name}}<button @click="DeleteTodoById(todo.id)">Löschen</button>
       </li>
     </ul>
   </div>
@@ -48,7 +48,70 @@ export default {
       // this.todos = [...this.todos, response.data]
 
       this.todoName = ''
-    }
+    },
+    DeleteTodoByIdOld(id)
+    {
+      var url = "http://localhost:57230/api/TodoItems/" +id;
+      var config 
+      var response = axios.delete(url, config);
+      var deleted = response.data;
+      var idx = -1
+    if (typeof deleted !== 'undefined')
+    {
+       idx = this.todos.indexOf(deleted);
+      if(idx != -1)
+      {
+        this.todos.splice(idx, 1);
+      }
+   }
+    },
+    //Arrows
+      DeleteTodoByIdOld2(id)
+      {
+        var url = "http://localhost:57230/api/TodoItems/" +id;
+        var config
+        axios.delete(url, config)
+  .then((response) => {
+      var deleted = response.data;
+      var idx = -1
+    if (typeof deleted !== 'undefined')
+    {
+       idx = this.todos.indexOf(deleted);
+      if(idx != -1)
+      {
+        this.todos.splice(idx, 1);
+      }
+  }
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
+      },
+      //bind(this)
+      DeleteTodoById(id)
+      {
+         var url = "http://localhost:57230/api/TodoItems/" +id;
+        var config
+        axios.delete(url, config)
+  .then(function (response) {
+     var deleted = response.data;
+      var idx = -1
+    if (typeof deleted !== 'undefined')
+    {
+      var deletedId = deleted.id;
+      var item = this.todos.find(item => item.id === deletedId);
+       idx = this.todos.indexOf(item);
+      if(idx != -1)
+      {
+        this.todos.splice(idx, 1);
+      }
+  }
+ }.bind(this))
+  .catch(function (error) {
+    console.log(error)
+  })
+       
+      }
   }
 }
 </script>
