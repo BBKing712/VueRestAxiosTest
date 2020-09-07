@@ -25,18 +25,27 @@ export default {
   },
   async created() {
     try {
-      const res = await axios.get("http://localhost:57230/api/TodoItems")
+      const response = await axios.get("http://localhost:57230/api/TodoItems")
 
-      this.todos = res.data;
+      this.todos = response.data;
     } catch(e) {
       // console.error(e)
     }
   },
   methods: {
     async addTodo() {
-      const res = await axios.post("http://localhost:57230/api/TodoItems", { name: this.todoName })
 
-      this.todos = [...this.todos, res.data]
+      var todo = [
+      {
+        name: this.todoName,
+        isComplete: false
+      }
+      ]
+      const response = await axios.post("http://localhost:57230/api/TodoItems", todo)
+      // this.todos.push(response.data);
+      this.todos =  this.todos.concat(response.data);
+
+      // this.todos = [...this.todos, response.data]
 
       this.todoName = ''
     }
