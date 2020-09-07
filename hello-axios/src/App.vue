@@ -6,7 +6,8 @@
       <li v-for="todo of todos" :key="todo.id">
         {{todo.name}}<button @click="DeleteTodoById(todo.id)">Löschen</button>
         <label> </label>
-        <input type="checkbox" :id="todo.id" v-model="todo.isComplete">
+        <!--Use @change instead of @click. Click event is triggered before value is really changed. -->
+        <input type="checkbox" :id="todo.id" v-model="todo.isComplete" @change="UpdateisComplete(todo.id)">
         <label>Erledigt</label>
       </li>
     </ul>
@@ -114,6 +115,20 @@ export default {
     console.log(error)
   })
        
+      },
+      UpdateisComplete(id)
+      {
+        var todo = this.todos.find(item => item.id === id);
+        if(todo)
+        {
+          todo.isComplete = !todo.isComplete;
+          var url = "http://localhost:57230/api/TodoItems/" +id;
+          var config
+          const response = axios.Put(url, todo, config)
+          var updated = response.data;
+          console.log(updated);
+      }
+  
       }
   }
 }
