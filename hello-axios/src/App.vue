@@ -5,6 +5,9 @@
     <ul>
       <li v-for="todo of todos" :key="todo.id">
         {{todo.name}}<button @click="DeleteTodoById(todo.id)">Löschen</button>
+        <label> </label>
+        <input type="checkbox" :id="todo.id" v-model="todo.isComplete">
+        <label>Erledigt</label>
       </li>
     </ul>
   </div>
