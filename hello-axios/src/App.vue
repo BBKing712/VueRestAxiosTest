@@ -53,44 +53,44 @@ export default {
 
       this.todoName = ''
     },
-    DeleteTodoByIdOld(id)
-    {
-      var url = "http://localhost:57230/api/TodoItems/" +id;
-      var config 
-      var response = axios.delete(url, config);
-      var deleted = response.data;
-      var idx = -1
-    if (typeof deleted !== 'undefined')
-    {
-       idx = this.todos.indexOf(deleted);
-      if(idx != -1)
-      {
-        this.todos.splice(idx, 1);
-      }
-   }
-    },
+  //   DeleteTodoByIdOld(id)
+  //   {
+  //     var url = "http://localhost:57230/api/TodoItems/" +id;
+  //     var config 
+  //     var response = axios.delete(url, config);
+  //     var deleted = response.data;
+  //     var idx = -1
+  //   if (typeof deleted !== 'undefined')
+  //   {
+  //      idx = this.todos.indexOf(deleted);
+  //     if(idx != -1)
+  //     {
+  //       this.todos.splice(idx, 1);
+  //     }
+  //  }
+  //   },
     //Arrows
-      DeleteTodoByIdOld2(id)
-      {
-        var url = "http://localhost:57230/api/TodoItems/" +id;
-        var config
-        axios.delete(url, config)
-  .then((response) => {
-      var deleted = response.data;
-      var idx = -1
-    if (typeof deleted !== 'undefined')
-    {
-       idx = this.todos.indexOf(deleted);
-      if(idx != -1)
-      {
-        this.todos.splice(idx, 1);
-      }
-  }
-  })
-  .catch(function (error) {
-    console.log(error)
-  })
-      },
+  //     DeleteTodoByIdOld2(id)
+  //     {
+  //       var url = "http://localhost:57230/api/TodoItems/" +id;
+  //       var config
+  //       axios.delete(url, config)
+  // .then((response) => {
+  //     var deleted = response.data;
+  //     var idx = -1
+  //   if (typeof deleted !== 'undefined')
+  //   {
+  //      idx = this.todos.indexOf(deleted);
+  //     if(idx != -1)
+  //     {
+  //       this.todos.splice(idx, 1);
+  //     }
+  // }
+  // })
+  // .catch(function (error) {
+  //   console.log(error)
+  // })
+  //     },
       //bind(this)
       DeleteTodoById(id)
       {
@@ -116,19 +116,41 @@ export default {
   })
        
       },
+      // UpdateisComplete(id)
+      // {
+      //   var todo = this.todos.find(item => item.id === id);
+      //   if(todo)
+      //   {
+      //     todo.isComplete = !todo.isComplete;
+      //     var url = "http://localhost:57230/api/TodoItems/" +id;
+      //     var config
+      //     const response = axios.Put(url, todo, config)
+      //     var updated = response.data;
+      //     console.log(updated);
+      // }
+  
+      // },
       UpdateisComplete(id)
       {
         var todo = this.todos.find(item => item.id === id);
         if(todo)
         {
-          todo.isComplete = !todo.isComplete;
           var url = "http://localhost:57230/api/TodoItems/" +id;
           var config
-          const response = axios.Put(url, todo, config)
-          var updated = response.data;
+          axios.put(url, todo, config)
+          .then(function (response)
+          {
+      var updated = response.data;
           console.log(updated);
+    
+          }.bind(this)
+
+          )
+          .catch(function (error) 
+          {
+    console.log(error)
+          })
       }
-  
       }
   }
 }
